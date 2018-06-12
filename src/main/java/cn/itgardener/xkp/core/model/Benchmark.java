@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ */
+
 package cn.itgardener.xkp.core.model;
 
 import java.util.List;

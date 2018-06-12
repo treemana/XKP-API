@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ */
+
 package cn.itgardener.xkp.service;
 
 import cn.itgardener.xkp.core.model.vo.ScoreVo;

@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ */
+
 package cn.itgardener.xkp.web;
 
 import cn.itgardener.xkp.common.RestData;
@@ -20,7 +24,7 @@ public class DemoRestApi {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/pathp", method = RequestMethod.GET)
-    public RestData DemoRe(@RequestParam(value = "pp", defaultValue = "123") String pp) {
+    public RestData demoRe(@RequestParam(value = "pp", defaultValue = "123") String pp) {
         logger.debug("function DemoRe, method GET debug");
         logger.info("function DemoRe, method GET info");
         logger.warn("function DemoRe, method GET warn");
@@ -33,7 +37,7 @@ public class DemoRestApi {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public RestData DemoInsert(@RequestParam(value = "name", defaultValue = "123") String name) {
+    public RestData demoInsert(@RequestParam(value = "name", defaultValue = "123") String name) {
         Academy academy = new Academy();
         academy.setName(name);
         return new RestData(academy);
