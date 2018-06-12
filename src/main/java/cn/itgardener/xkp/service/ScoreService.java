@@ -1,0 +1,20 @@
+package cn.itgardener.xkp.service;
+
+import cn.itgardener.xkp.core.model.vo.ScoreVo;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by Hunter-Yi on 17-9-12 上午9:40
+ */
+public interface ScoreService {
+
+    List<Map<String, Object>> getScoreByClassId(int classId);
+
+    boolean postScore(ScoreVo scoreVo);
+
+    boolean putScore(ScoreVo scoreVo);
+
+    void deleteAll();
+}
