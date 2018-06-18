@@ -20,6 +20,7 @@ public class CourseProvider {
                 if (null != course.getClassId()) {
                     WHERE("class_id=#{classId}");
                 }
+                ORDER_BY("credit desc");
             }
         }.toString();
     }

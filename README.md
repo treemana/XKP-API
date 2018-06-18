@@ -1,6 +1,16 @@
-# 项目分析总结
+# 1. 成绩大表
 
-## 架构
+<!-- TOC -->
+
+- [1. 成绩大表](#1-成绩大表)
+  - [1.1. 架构](#11-架构)
+    - [1.1.1. 注意](#111-注意)
+  - [1.2. export war](#12-export-war)
+  - [1.3. next version](#13-next-version)
+
+<!-- /TOC -->
+
+## 1.1. 架构
 
 架构是蚂蚁金服的sofa2简化版架构,根据郑哥口述,sofa2架构如下:
 
@@ -35,7 +45,7 @@
 
 ---
 
-### 注意
+### 1.1.1. 注意
 
 - 在进行多表联查的时候,不通过join语句进行连接查询,而是通过service的业务处理的方式来实现多个表中数据的调用
   - 如果是mapper层级的多表联查,在单个service中进行处理即可
@@ -47,7 +57,7 @@
 
 ---
 
-## export war
+## 1.2. export war
 
 1. 打开 pom 注释 spring-boot-starter-tomcat
 
@@ -55,11 +65,9 @@
 
 ---
 
-## next version
+## 1.3. next version
 
-- SpringBoot 升级至 2.x
-- excel 格式下载
-  - POI 方式提供下载 docx 和 xlsx 文件
+- POI 方式提供下载 docx 文件
 - 历史查询
 - 德育录入公式修改
 - 数字东林批量导入

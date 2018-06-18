@@ -39,12 +39,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- free makeer concerned -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-
         <!-- spring mybatis concerned -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -52,18 +46,25 @@
             <version>${mybatis.starter.version}</version>
         </dependency>
 
-        <!-- mysql connector -->
+        <!-- freemarker concerned -->
         <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>${apache.poi.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
+        <!-- mysql connector concerned -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- apache poi concerned -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${apache.poi.version}</version>
         </dependency>
 
         <!--<dependency>-->
