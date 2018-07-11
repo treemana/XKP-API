@@ -78,21 +78,23 @@ CREATE TABLE IF NOT EXISTS `xkp_history` (
   COMMENT '主键',
   `academy_id`     INT UNSIGNED          DEFAULT NULL
   COMMENT '学院id',
-  `academy_name`   VARCHAR(15)           DEFAULT NULL
+  `academy_name`   VARCHAR(15)  DEFAULT NULL
   COMMENT '学院名称',
-  `specialty_id`   INT UNSIGNED          DEFAULT NULL
+  `specialty_id`   INT UNSIGNED DEFAULT NULL
   COMMENT '专业id',
-  `specialty_name` VARCHAR(40)           DEFAULT NULL
+  `specialty_name` VARCHAR(40)  DEFAULT NULL
   COMMENT '专业名称',
-  `class_id`       INT UNSIGNED          DEFAULT NULL
+  `class_id`       INT UNSIGNED DEFAULT NULL
   COMMENT '班级id',
-  `class_name`     VARCHAR(30)           DEFAULT NULL
+  `class_name`     VARCHAR(30)  DEFAULT NULL
   COMMENT '班级名称',
-  `grade`          CHAR(4)               DEFAULT NULL
+  `grade`          CHAR(4)      DEFAULT NULL
   COMMENT '年级',
-  `title_date`     VARCHAR(45)           DEFAULT NULL
+  `title_date`     VARCHAR(45)  DEFAULT NULL
   COMMENT '标题时间',
-  `benchmark_data` JSON                  DEFAULT NULL
+  `courses`        JSON         DEFAULT NULL
+  COMMENT '课程信息',
+  `benchmark_data` JSON         DEFAULT NULL
   COMMENT '大表数据',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_query` (`academy_id`, `specialty_id`, `class_id`, `grade`, `title_date`)
