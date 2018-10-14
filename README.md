@@ -8,6 +8,7 @@
   - [1.2. export war](#12-export-war)
   - [1.3. next version](#13-next-version)
   - [1.4. 分支说明](#14-分支说明)
+  - [1.5. 其他说明](#15-其他说明)
 
 <!-- /TOC -->
 
@@ -78,3 +79,8 @@
 - master 最终产品分支,不允许直接 push
 - 默认开发分支 dev, 原则上不允许任何人直接 push
 - 功能开发分支在自己新建,完成后 CR (code review), 提 MR 合并分支代码
+
+## 1.5. 其他说明
+
+- git 提交时,将 username 改称姓名全拼,可以在码云页面改全局的,也可以在项目里面改 git 配置文件变成项目的
+- 在idea版本信息设置为:Copyright (c) 2014-$today.year www.itgardener.cn. All rights reserved.
