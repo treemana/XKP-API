@@ -17,4 +17,5 @@ public interface HistoryService {
      * @return 是否执行成功
      */
     boolean postHistory();
+
 }

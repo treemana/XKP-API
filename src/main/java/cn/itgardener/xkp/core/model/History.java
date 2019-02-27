@@ -35,8 +35,11 @@ public class History {
     // 年级
     private String grade;
 
-    // 标题名称
+    // 标题时间
     private String titleDate;
+
+    // 课程信息
+    private String courses;
 
     // 大表数据
     private String benchmarkData;
@@ -113,11 +116,36 @@ public class History {
         this.titleDate = titleDate;
     }
 
+    public String getCourses() {
+        return courses;
+    }
+
+    public void setCourses(String courses) {
+        this.courses = courses;
+    }
+
     public String getBenchmarkData() {
         return benchmarkData;
     }
 
     public void setBenchmarkData(String benchmarkData) {
         this.benchmarkData = benchmarkData;
+    }
+
+    @Override
+    public String toString() {
+        return "History{" +
+                "systemId=" + systemId +
+                ", academyId=" + academyId +
+                ", academyName='" + academyName + '\'' +
+                ", specialtyId=" + specialtyId +
+                ", specialtyName='" + specialtyName + '\'' +
+                ", classId=" + classId +
+                ", className='" + className + '\'' +
+                ", grade='" + grade + '\'' +
+                ", titleDate='" + titleDate + '\'' +
+                ", courses='" + courses + '\'' +
+                ", benchmarkData='" + benchmarkData + '\'' +
+                '}';
     }
 }
