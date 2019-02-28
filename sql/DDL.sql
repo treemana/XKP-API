@@ -23,9 +23,9 @@ USE `xkpdb`;
 -- Table `xkpdb`.`xkp_academy`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_academy` (
-  `system_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT
+  `system_id` INT UNSIGNED NOT NULL AUTO_INCREMENT
   COMMENT '主键',
-  `name`      VARCHAR(15)      NULL     DEFAULT NULL
+  `name`      VARCHAR(15)  NULL     DEFAULT NULL
   COMMENT '学院名称',
   PRIMARY KEY (`system_id`)
 )
@@ -36,13 +36,13 @@ CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_academy` (
 -- Table `xkpdb`.`xkp_class`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_class` (
-  `system_id`    INT(10) UNSIGNED NOT NULL AUTO_INCREMENT
+  `system_id`    INT UNSIGNED NOT NULL AUTO_INCREMENT
   COMMENT '主键',
-  `specialty_id` INT(10) UNSIGNED NULL     DEFAULT NULL
+  `specialty_id` INT UNSIGNED NULL     DEFAULT NULL
   COMMENT '专业主键',
-  `grade`        CHAR(4)          NULL     DEFAULT NULL
+  `grade`        CHAR(4)      NULL     DEFAULT NULL
   COMMENT '年级',
-  `name`         VARCHAR(30)      NULL     DEFAULT NULL
+  `name`         VARCHAR(30)  NULL     DEFAULT NULL
   COMMENT '班级名称',
   PRIMARY KEY (`system_id`),
   INDEX `uq_class_specialty_grade` (`specialty_id` ASC, `grade` ASC)
@@ -54,15 +54,15 @@ CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_class` (
 -- Table `xkpdb`.`xkp_course`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_course` (
-  `system_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT
+  `system_id` INT UNSIGNED NOT NULL AUTO_INCREMENT
   COMMENT '主键',
-  `class_id`  INT(10) UNSIGNED NULL     DEFAULT NULL
+  `class_id`  INT UNSIGNED NULL     DEFAULT NULL
   COMMENT '班级主键',
-  `credit`    FLOAT            NULL     DEFAULT NULL
+  `credit`    FLOAT        NULL     DEFAULT NULL
   COMMENT '学分',
-  `name`      VARCHAR(30)      NULL     DEFAULT NULL
+  `name`      VARCHAR(30)  NULL     DEFAULT NULL
   COMMENT '课程名称',
-  `type`      TINYINT(1)       NOT NULL DEFAULT '0'
+  `type`      TINYINT(1)   NOT NULL DEFAULT '0'
   COMMENT '0 考察,1 考试',
   PRIMARY KEY (`system_id`),
   INDEX `index2` (`class_id` ASC)
@@ -71,28 +71,60 @@ CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_course` (
   DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
+-- Table `xkpdb`.`xkp_history`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `xkp_history` (
+  `id`             INT UNSIGNED NOT NULL AUTO_INCREMENT
+  COMMENT '主键',
+  `academy_id`     INT UNSIGNED          DEFAULT NULL
+  COMMENT '学院id',
+  `academy_name`   VARCHAR(15)  DEFAULT NULL
+  COMMENT '学院名称',
+  `specialty_id`   INT UNSIGNED DEFAULT NULL
+  COMMENT '专业id',
+  `specialty_name` VARCHAR(40)  DEFAULT NULL
+  COMMENT '专业名称',
+  `class_id`       INT UNSIGNED DEFAULT NULL
+  COMMENT '班级id',
+  `class_name`     VARCHAR(30)  DEFAULT NULL
+  COMMENT '班级名称',
+  `grade`          CHAR(4)      DEFAULT NULL
+  COMMENT '年级',
+  `title_date`     VARCHAR(45)  DEFAULT NULL
+  COMMENT '标题时间',
+  `courses`        JSON         DEFAULT NULL
+  COMMENT '课程信息',
+  `benchmark_data` JSON         DEFAULT NULL
+  COMMENT '大表数据',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_query` (`academy_id`, `specialty_id`, `class_id`, `grade`, `title_date`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8;
+
+-- -----------------------------------------------------
 -- Table `xkpdb`.`xkp_manager`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_manager` (
-  `system_id`    INT(10)     NOT NULL AUTO_INCREMENT
+  `system_id`    INT UNSIGNED NOT NULL AUTO_INCREMENT
   COMMENT '主键',
-  `academy_id`   INT(10)     NULL     DEFAULT NULL
+  `academy_id`   INT UNSIGNED NULL     DEFAULT NULL
   COMMENT '学院id',
-  `specialty_id` INT(10)     NULL     DEFAULT NULL
+  `specialty_id` INT UNSIGNED NULL     DEFAULT NULL
   COMMENT '专业id',
-  `class_id`     INT(10)     NULL     DEFAULT NULL
+  `class_id`     INT UNSIGNED NULL     DEFAULT NULL
   COMMENT '班级id',
-  `status`       TINYINT(1)  NOT NULL DEFAULT '0'
+  `status`       TINYINT(1)   NOT NULL DEFAULT '0'
   COMMENT '0 无效,1 有效',
-  `type`         CHAR(1)     NULL     DEFAULT NULL
+  `type`         CHAR(1)      NULL     DEFAULT NULL
   COMMENT 'A 管理员 | B 学院 | C 学生',
-  `grade`        CHAR(4)     NULL     DEFAULT NULL
+  `grade`        CHAR(4)      NULL     DEFAULT NULL
   COMMENT '年级',
-  `token`        CHAR(33)    NULL     DEFAULT NULL
+  `token`        CHAR(33)     NULL     DEFAULT NULL
   COMMENT '登录token',
-  `username`     VARCHAR(15) NULL     DEFAULT NULL
+  `username`     VARCHAR(15)  NULL     DEFAULT NULL
   COMMENT '用户名',
-  `password`     VARCHAR(20) NULL     DEFAULT NULL
+  `password`     VARCHAR(20)  NULL     DEFAULT NULL
   COMMENT '密码',
   PRIMARY KEY (`system_id`),
   UNIQUE INDEX `uq_manager_username` (`username` ASC),
@@ -105,15 +137,15 @@ CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_manager` (
 -- Table `xkpdb`.`xkp_score`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_score` (
-  `student_id`  INT(10)    DEFAULT NULL
+  `student_id`  INT UNSIGNED DEFAULT NULL
   COMMENT '学生id',
-  `course_id`   INT(10)    DEFAULT NULL
+  `course_id`   INT UNSIGNED DEFAULT NULL
   COMMENT '课程id',
-  `type`        TINYINT(1) DEFAULT NULL
+  `type`        TINYINT(1)   DEFAULT NULL
   COMMENT '0 考察,1 考试',
-  `examination` FLOAT      DEFAULT NULL
+  `examination` FLOAT        DEFAULT NULL
   COMMENT '考试分数',
-  `inspection`  VARCHAR(3) DEFAULT NULL
+  `inspection`  VARCHAR(3)   DEFAULT NULL
   COMMENT '考察成绩',
   UNIQUE KEY `index1` (`student_id`, `course_id`)
 )
@@ -124,11 +156,11 @@ CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_score` (
 -- Table `xkpdb`.`xkp_specialty`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_specialty` (
-  `system_id`  INT(10) UNSIGNED NOT NULL AUTO_INCREMENT
+  `system_id`  INT UNSIGNED NOT NULL AUTO_INCREMENT
   COMMENT '主键',
-  `academy_id` INT(10) UNSIGNED NULL     DEFAULT NULL
+  `academy_id` INT UNSIGNED NULL     DEFAULT NULL
   COMMENT '学院主键',
-  `name`       VARCHAR(40)      NULL     DEFAULT NULL
+  `name`       VARCHAR(40)  NULL     DEFAULT NULL
   COMMENT '专业名称',
   PRIMARY KEY (`system_id`)
 )
@@ -139,27 +171,27 @@ CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_specialty` (
 -- Table `xkpdb`.`xkp_student`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_student` (
-  `system_id`      INT(10) UNSIGNED NOT NULL AUTO_INCREMENT
+  `system_id`      INT UNSIGNED NOT NULL AUTO_INCREMENT
   COMMENT '主键',
-  `class_id`       INT(10) UNSIGNED NULL     DEFAULT NULL
+  `class_id`       INT UNSIGNED NULL     DEFAULT NULL
   COMMENT '班级主键',
-  `student_number` CHAR(10)         NOT NULL
+  `student_number` CHAR(10)     NOT NULL
   COMMENT '学号',
-  `behavior`       CHAR(1)          NULL     DEFAULT '中'
+  `behavior`       CHAR(1)      NULL     DEFAULT '中'
   COMMENT '操行评等',
-  `moral`          FLOAT            NULL     DEFAULT '0'
+  `moral`          FLOAT        NULL     DEFAULT '0'
   COMMENT '德育',
-  `activity`       FLOAT            NULL     DEFAULT '0'
+  `activity`       FLOAT        NULL     DEFAULT '0'
   COMMENT '文体',
-  `duty`           FLOAT            NULL     DEFAULT '0'
+  `duty`           FLOAT        NULL     DEFAULT '0'
   COMMENT '职务',
-  `academic`       FLOAT            NULL     DEFAULT '0'
+  `academic`       FLOAT        NULL     DEFAULT '0'
   COMMENT '学术',
-  `name`           VARCHAR(20)      NULL     DEFAULT NULL
+  `name`           VARCHAR(20)  NULL     DEFAULT NULL
   COMMENT '姓名',
-  `duty_desc`      VARCHAR(40)      NULL     DEFAULT NULL
+  `duty_desc`      VARCHAR(40)  NULL     DEFAULT NULL
   COMMENT '职务说明',
-  `academic_desc`  VARCHAR(50)      NULL     DEFAULT NULL
+  `academic_desc`  VARCHAR(50)  NULL     DEFAULT NULL
   COMMENT '学术说明',
   PRIMARY KEY (`system_id`),
   UNIQUE INDEX `uq_student_number` USING BTREE (`student_number` ASC),

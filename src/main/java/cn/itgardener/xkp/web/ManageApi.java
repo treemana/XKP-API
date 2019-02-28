@@ -11,16 +11,14 @@ import cn.itgardener.xkp.common.util.JsonUtil;
 import cn.itgardener.xkp.common.util.TokenUtil;
 import cn.itgardener.xkp.core.mapper.AcademyMapper;
 import cn.itgardener.xkp.core.mapper.ClassMapper;
-import cn.itgardener.xkp.core.mapper.CourseMapper;
 import cn.itgardener.xkp.core.mapper.SpecialtyMapper;
 import cn.itgardener.xkp.core.model.Academy;
 import cn.itgardener.xkp.core.model.Class;
 import cn.itgardener.xkp.core.model.Manager;
 import cn.itgardener.xkp.core.model.Specialty;
 import cn.itgardener.xkp.core.model.vo.ManagerVo;
+import cn.itgardener.xkp.service.HistoryService;
 import cn.itgardener.xkp.service.ManagerService;
-import cn.itgardener.xkp.service.ScoreService;
-import cn.itgardener.xkp.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,22 +40,19 @@ public class ManageApi {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final AcademyMapper academyMapper;
-    private final ManagerService managerService;
-    private final SpecialtyMapper specialtyMapper;
     private final ClassMapper classMapper;
-    private final CourseMapper courseMapper;
-    private final ScoreService scoreService;
-    private final StudentService studentService;
+    private final SpecialtyMapper specialtyMapper;
+    private final HistoryService historyService;
+    private final ManagerService managerService;
 
     @Autowired
-    public ManageApi(AcademyMapper academyMapper, ManagerService managerService, SpecialtyMapper specialtyMapper, ClassMapper classMapper, CourseMapper courseMapper, ScoreService scoreService, StudentService studentService) {
+    public ManageApi(AcademyMapper academyMapper, ManagerService managerService, SpecialtyMapper specialtyMapper,
+                     ClassMapper classMapper, HistoryService historyService) {
         this.academyMapper = academyMapper;
         this.managerService = managerService;
         this.specialtyMapper = specialtyMapper;
         this.classMapper = classMapper;
-        this.courseMapper = courseMapper;
-        this.scoreService = scoreService;
-        this.studentService = studentService;
+        this.historyService = historyService;
     }
 
     @RequestMapping(value = "/academy", method = RequestMethod.POST)
@@ -298,15 +293,8 @@ public class ManageApi {
         if (!"A".equals(currentUser.getType())) {
             return new RestData(1, ErrorMessage.NO_PERMITION);
         }
-        courseMapper.deleteAll();
-        scoreService.deleteAll();
-        studentService.initStudent();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return new RestData(true);
+        boolean data = historyService.postHistory();
+        return new RestData(data);
     }
 
     @RequestMapping(value = "/specialty", method = RequestMethod.POST)
