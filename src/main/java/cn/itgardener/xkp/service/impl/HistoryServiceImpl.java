@@ -117,4 +117,26 @@ public class HistoryServiceImpl implements HistoryService {
         return String.format(title, yearLeft, yearRight, part);
     }
 
+    @Override
+    public List<Object> getHistory(int classId) {
+        History res = historyMapper.selectByClassId(classId);
+        return JsonUtil.getListFromJson(res.getBenchmarkData());
+    }
+
+    @Override
+    public List<String> getTitle() {
+        return historyMapper.selectTitle();
+    }
+
+    @Override
+    public List<String> getGrade() {
+        return historyMapper.selectGrade();
+    }
+
+    @Override
+    public List<Object> getCourses(int classId) {
+        History res = historyMapper.selectByClassId(classId);
+        return JsonUtil.getListFromJson(res.getCourses());
+    }
+
 }
