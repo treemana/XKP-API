@@ -6,10 +6,12 @@ package cn.itgardener.xkp.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,6 +21,7 @@ public class JsonUtil {
     private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
     private static ObjectMapper objectMapper = new ObjectMapper();
+
 
     public static String getJsonString(Object object) {
         String jsonString = null;
@@ -39,5 +42,16 @@ public class JsonUtil {
             logger.error(e.getLocalizedMessage());
         }
         return map;
+    }
+
+    public static List<Object> getListFromJson(String jsonString) {
+        List<Object> list;
+        try {
+            list = objectMapper.readValue(jsonString, List.class);
+        }catch (IOException e) {
+            list = null;
+            logger.error(e.getLocalizedMessage());
+        }
+        return list;
     }
 }

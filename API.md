@@ -53,6 +53,12 @@
     - [1.12.1. 添加成绩](#1121-添加成绩)
     - [1.12.2. 查询成绩](#1122-查询成绩)
     - [1.12.3. 修改成绩](#1123-修改成绩)
+    - [1.12.4. 成绩导入](#1124-成绩导入)
+  - [1.13. 历史记录](#113-历史记录)
+    - [1.13.1. 查询历史学期](#1131-查询历史学期)
+    - [1.13.2 查询历史大表](#1132-查询历史大表)
+    - [1.13.3. 查询历史年级](#1133-查询历史年级)
+    - [1.13.4. 查询历史班级课程](#1134-查询历史班级课程)
 
 <!-- /TOC -->
 
@@ -940,3 +946,118 @@
 ```
 
 ---
+
+### 1.12.4. 成绩导入
+
+- POST /student
+- payload :
+  - Content-Type = multipart/form-data
+  - file = 2015.xlsx
+- return :
+
+```json
+{
+    "code" : 0,
+    "message": "",
+    "data" : true
+}
+```
+
+---
+
+## 1.13. 历史记录
+
+### 1.13.1. 查询历史学期
+
+- GET /xkp/history/title
+- return :
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data":  [
+        "2018-2019年度上学期"
+    ]
+}
+```
+
+---
+
+### 1.13.2 查询历史大表
+
+- GET /xkp/history/benchmark/{classId}
+  - classId : 班级 id
+- return :
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": [
+        {
+            "studentNumber": 2017111363,
+            "name": "zhang",
+            "marks": [
+                {
+                    "courseId": 1234,
+                    "type": true,
+                    "examination": 70,
+                    "inspection": null
+                }
+            ],
+            "academic": 3.5,
+            "point": 2.333,
+            "behavior": "优",
+            "moral": 4.000,
+            "activity": 5.000,
+            "other": 2.750,
+            "dutyDesc": "班长",
+            "score": 71.4830,
+            "total": 82.5500,
+            "complexRank": 1,
+            "scoreRank": 2
+        }
+    ]
+}
+```
+
+---
+
+### 1.13.3. 查询历史年级
+
+- GET /xkp/history/grade
+- return :
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data":  [
+        "2015"
+    ]
+}
+```
+
+---
+
+### 1.13.4. 查询历史班级课程
+
+- GET /xkp/history/course
+- return :
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data": [
+        {
+            "systemId": 12,
+            "courseId": 1234,
+            "name": "高数",
+            "credit": 4.5,
+            "type": true
+        }
+    ]
+}
+```
