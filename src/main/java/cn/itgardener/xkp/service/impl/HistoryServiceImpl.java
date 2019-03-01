@@ -85,13 +85,13 @@ public class HistoryServiceImpl implements HistoryService {
             String courses =JsonUtil.getJsonString(courseMapper.selectByCondition(course));
 
             history.setCourses(courses);
-            System.out.println(history.toString());
+            //System.out.println(history.toString());
             historyMapper.insert(history);
         }
 
-        //courseMapper.deleteAll();
-        //scoreService.deleteAll();
-        //studentService.initStudent();
+        courseMapper.deleteAll();
+        scoreService.deleteAll();
+        studentService.initStudent();
 
         return true;
     }

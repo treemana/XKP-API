@@ -35,7 +35,7 @@ public class History {
     // 年级
     private String grade;
 
-    // 标题时间
+    // 标题名称
     private String titleDate;
 
     // 课程信息
