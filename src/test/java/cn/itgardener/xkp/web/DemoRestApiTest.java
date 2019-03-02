@@ -1,5 +1,5 @@
 /*
- * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.web;
@@ -47,6 +47,6 @@ public class DemoRestApiTest extends RootApiTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
-        Assert.assertEquals("{\"code\":0,\"message\":\"\",\"data\":\"qq 456\"}", mvcResult.getResponse().getContentAsString());
+        Assert.assertEquals("{\"code\":0,\"message\":\"\",\"data\":[\"a\",\"b\",\"c\"]}", mvcResult.getResponse().getContentAsString());
     }
 }
