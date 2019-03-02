@@ -1,12 +1,11 @@
 /*
- * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +47,7 @@ public class JsonUtil {
         List<Object> list;
         try {
             list = objectMapper.readValue(jsonString, List.class);
-        }catch (IOException e) {
+        } catch (IOException e) {
             list = null;
             logger.error(e.getLocalizedMessage());
         }
