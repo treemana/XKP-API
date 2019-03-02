@@ -992,7 +992,8 @@
 
 ### 1.13.2. 查询历史大表
 
-- GET /xkp/history/benchmark/{titleId}
+- GET /xkp/history/benchmark/{classId}
+  - classId : 班级 id
 - return :
 
 ```json
@@ -1029,7 +1030,22 @@
 
 ---
 
-### 1.13.3. 查询历史班级课程
+### 1.13.3. 查询历史年级
+
+- GET /xkp/history/grade
+- return :
+
+```json
+{
+    "code": 0,
+    "message": "",
+    "data":  [
+        "2015"
+    ]
+}
+```
+
+---
 
 - GET /xkp/history/course/{titleId}
 - return :
