@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `xkpdb`.`xkp_course` (
 -- Table `xkpdb`.`xkp_history`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xkp_history` (
-  `id`             INT UNSIGNED NOT NULL AUTO_INCREMENT
+  `system_id`             INT UNSIGNED NOT NULL AUTO_INCREMENT
   COMMENT '主键',
   `academy_id`     INT UNSIGNED          DEFAULT NULL
   COMMENT '学院id',

@@ -969,7 +969,7 @@
 
 ### 1.13.1. 查询历史学期
 
-- GET /xkp/history/title
+- GET /xkp/history/title/{classId}
 - return :
 
 ```json
@@ -977,7 +977,14 @@
     "code": 0,
     "message": "",
     "data":  [
-        "2018-2019年度上学期"
+        {
+            "systemId": 123,
+            "name": "2018-2019年度上学期"
+        },
+        {
+            "systemId": 321,
+            "name": "2018-2019年度下学期"
+        }
     ]
 }
 ```
@@ -986,8 +993,7 @@
 
 ### 1.13.2 查询历史大表
 
-- GET /xkp/history/benchmark/{classId}
-  - classId : 班级 id
+- GET /xkp/history/benchmark/{titleId}
 - return :
 
 ```json
@@ -1024,26 +1030,9 @@
 
 ---
 
-### 1.13.3. 查询历史年级
+### 1.13.3. 查询历史班级课程
 
-- GET /xkp/history/grade
-- return :
-
-```json
-{
-    "code": 0,
-    "message": "",
-    "data":  [
-        "2015"
-    ]
-}
-```
-
----
-
-### 1.13.4. 查询历史班级课程
-
-- GET /xkp/history/course
+- GET /xkp/history/course/{titleId}
 - return :
 
 ```json

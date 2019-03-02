@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -30,13 +31,13 @@ public interface HistoryMapper {
      * 查询历史大表
      * @return
      */
-    @Select("SELECT benchmark_data AS benchmarkData,courses FROM xkp_history WHERE class_id=#{classId}")
-    History selectByClassId(int classId);
+    @Select("SELECT benchmark_data AS benchmarkData,courses FROM xkp_history WHERE system_id=#{titleId}")
+    History selectByCondition(int titleId);
 
     /**
      * 查询大表表头
      * @return
      */
-    @Select("SELECT DISTINCT title_date FROM xkp_history WHERE title_date IS NOT NULL")
-    List<String> selectTitle();
+    @Select("SELECT DISTINCT system_id AS systemId, title_date AS titleDate FROM xkp_history WHERE title_date IS NOT NULL and class_id=#{classId}")
+    List<History> selectTitle(int classId);
 }

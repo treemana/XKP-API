@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author : Hunter
@@ -118,14 +121,22 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public List<Object> getHistory(int classId) {
-        History res = historyMapper.selectByClassId(classId);
+    public List<Object> getHistory(int titleId) {
+        History res = historyMapper.selectByCondition(titleId);
         return JsonUtil.getListFromJson(res.getBenchmarkData());
     }
 
     @Override
-    public List<String> getTitle() {
-        return historyMapper.selectTitle();
+    public List<Object> getTitle(int classId) {
+        Map<String, Object> map = new HashMap<>(2);
+        List<History> historys = historyMapper.selectTitle(classId);
+        List<Object> ret = new ArrayList<>();
+        for (History history : historys) {
+            map.put("systemId",history.getSystemId());
+            map.put("name",history.getTitleDate());
+            ret.add(map);
+        }
+        return ret;
     }
 
     @Override
@@ -134,8 +145,8 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public List<Object> getCourses(int classId) {
-        History res = historyMapper.selectByClassId(classId);
+    public List<Object> getCourses(int titleId) {
+        History res = historyMapper.selectByCondition(titleId);
         return JsonUtil.getListFromJson(res.getCourses());
     }
 

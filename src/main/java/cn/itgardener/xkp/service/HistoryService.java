@@ -5,6 +5,7 @@
 package cn.itgardener.xkp.service;
 
 import cn.itgardener.xkp.core.model.Benchmark;
+import cn.itgardener.xkp.core.model.History;
 
 import java.util.List;
 
@@ -24,16 +25,16 @@ public interface HistoryService {
 
     /**
      * 获取历史大表
-     * @param classId
+     * @param titleId
      * @return
      */
-    List<Object> getHistory(int classId);
+    List<Object> getHistory(int titleId);
 
     /**
      * 获取历史大表表头
      * @return
      */
-    List<String> getTitle();
+    List<Object> getTitle(int classId);
 
     /**
      * 获取历史年级
@@ -43,9 +44,9 @@ public interface HistoryService {
 
     /**
      * 获取历史课程
-     * @param classId
+     * @param titleId
      * @return
      */
-    List<Object> getCourses(int classId);
+    List<Object> getCourses(int titleId);
 
 }
