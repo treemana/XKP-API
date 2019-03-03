@@ -948,7 +948,7 @@
 
 ### 1.12.4. 成绩导入
 
-- POST /student
+- POST /xkp/score-table
 - payload :
   - Content-Type = multipart/form-data
   - file = 2015.xlsx

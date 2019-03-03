@@ -1,5 +1,5 @@
 /*
- * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.service.impl;
@@ -15,6 +15,7 @@ import cn.itgardener.xkp.core.model.Score;
 import cn.itgardener.xkp.core.model.Student;
 import cn.itgardener.xkp.core.model.vo.ScoreVo;
 import cn.itgardener.xkp.service.ScoreService;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -137,53 +138,64 @@ public class ScoreServiceImpl implements ScoreService {
         Student student = new Student();
         student.setClassId(currentUser.getClassId());
 
-        //将课程存入课程表,
+        // 将课程存入课程表,
         int k = sheet.getFirstRowNum();
         row1 = sheet.getRow(k);
         row2 = sheet.getRow(++k);
         row3 = sheet.getRow(++k);
 
-        Course course = new Course();
         String credit, name, type;
-        for (int j = row1.getFirstCellNum() + 1; j < row1.getPhysicalNumberOfCells(); j++) {
-            name = row1.getCell(j).toString();
-            if (name.equals("") || null == name) {
+        int courseNum = 0;
+        int cellStartIndex = row1.getFirstCellNum();
+        Map<Integer, Course> courseMap = new HashMap<>();
+        XSSFCell xssfCell;
+        for (int j = cellStartIndex + 1; j < row1.getPhysicalNumberOfCells(); j++) {
+            Course course = new Course();
+
+            xssfCell = row1.getCell(j);
+            if (null == xssfCell || 1 > xssfCell.toString().length()) {
                 break;
             } else {
+                name = xssfCell.toString();
                 course.setName(name);
             }
-            credit = row2.getCell(j).toString();
-            if (credit.equals("") || null == credit) {
-                break;
+
+            xssfCell = row2.getCell(j);
+            if (null == xssfCell || 1 > xssfCell.toString().length()) {
+                course.setCredit(0);
             } else {
+                credit = xssfCell.toString();
                 course.setCredit(Float.parseFloat(credit));
             }
-            type = row3.getCell(j).toString();
-            if (type.equals("") || null == type) {
-                break;
+
+            xssfCell = row3.getCell(j);
+            if (null == xssfCell || 1 > xssfCell.toString().length()) {
+                return new RestData(1, ErrorMessage.TABLE_ERROR);
             } else {
-                Float type1 = Float.parseFloat(type);
-                if (type1 < 0.5) {
-                    course.setType(false);
-                } else {
-                    course.setType(true);
-                }
+                type = xssfCell.toString();
+                course.setType(Float.parseFloat(type) > 0.5);
             }
             course.setClassId(currentUser.getClassId());
-            courseMapper.insert(course);
+
+            if (0 < courseMapper.insert(course)) {
+                courseNum++;
+                courseMap.put(j, course);
+            }
         }
 
         // 将学生成绩存入成绩表
         XSSFRow row;
         Score score = new Score();
-        String studentNumber;
         for (int i = sheet.getFirstRowNum() + 3; i < sheet.getPhysicalNumberOfRows(); i++) {
             row = sheet.getRow(i);
 
             // 获取studentId
-            studentNumber = row.getCell(row.getFirstCellNum()).toString();
+            xssfCell = row.getCell(cellStartIndex);
+            if (null == xssfCell || 1 > xssfCell.toString().length()) {
+                break;
+            }
             Student stu = new Student();
-            stu.setStudentNumber(studentNumber);
+            stu.setStudentNumber(xssfCell.toString());
             List<Student> students = studentMapper.selectByCondition(stu);
             if (0 < students.size()) {
                 score.setStudentId(students.get(0).getSystemId());
@@ -192,37 +204,23 @@ public class ScoreServiceImpl implements ScoreService {
             }
 
             // 获取courseId
-            for (int j = row.getFirstCellNum() + 1; j < row.getPhysicalNumberOfCells(); j++) {
-                String courseName = row1.getCell(j).toString();
-                Course course1 = new Course();
-                course1.setName(courseName);
-                course1.setClassId(students.get(0).getClassId());
-                List<Course> courses = courseMapper.selectByNameAndClassId(course1);
-
-                if (0 < courses.size()) {
-                    score.setCourseId(courses.get(0).getSystemId());
-
-                    //判断该门课程为考察/考试
-                    if (courses.get(0).isType() == true) {
-                        score.setType(true);
-                        if ((row.getCell(j).toString()).equals("") || (row.getCell(j).toString()) == null) {
-                            score.setExamination(null);
-                        } else {
-                            score.setExamination(Float.parseFloat(row.getCell(j).toString()));
-                        }
-                    } else if (courses.get(0).isType() == false) {
-                        score.setType(false);
-                        if ((row.getCell(j).toString()).equals("") || (row.getCell(j).toString()) == null) {
-                            score.setInspection(null);
-                        } else {
-                            score.setInspection(row.getCell(j).toString());
-                        }
-                    }
+            for (int j = cellStartIndex + 1; j < courseNum + 1; j++) {
+                Course course = courseMap.get(j);
+                // 判断该门课程为考察/考试
+                score.setType(course.isType());
+                xssfCell = row.getCell(j);
+                if (null == xssfCell || 1 > xssfCell.toString().length()) {
+                    score.setExamination(null);
+                    score.setInspection(null);
+                } else if (course.isType()) {
+                    // 考试
+                    score.setExamination(Float.parseFloat(xssfCell.toString()));
                 } else {
-                    break;
+                    // 考察
+                    score.setInspection(xssfCell.toString());
                 }
-                scoreMapper.insertScore(score);
 
+                scoreMapper.insert(score);
             }
         }
         return new RestData(true);

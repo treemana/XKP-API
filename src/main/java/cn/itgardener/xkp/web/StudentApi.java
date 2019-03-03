@@ -220,11 +220,43 @@ public class StudentApi {
         if (null == currentUser) {
             return new RestData(2, ErrorMessage.PLEASE_RELOGIN);
         }
+        if (!"C".equals(currentUser.getType())) {
+            return new RestData(1, ErrorMessage.NO_PERMITION);
+        }
         if (scoreService.putScore(scoreVo)) {
             return new RestData(true);
         } else {
             return new RestData(1, ErrorMessage.POST_COURSE_FAILED);
         }
+    }
+
+    @RequestMapping(value = "/score-table", method = RequestMethod.POST)
+    public RestData postScoreTable(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        logger.info("POST score-import : ");
+        Manager currentUser = TokenUtil.getManagerByToken(request);
+        if (null == currentUser) {
+            return new RestData(2, ErrorMessage.PLEASE_RELOGIN);
+        }
+        if (!"C".equals(currentUser.getType())) {
+            return new RestData(1, ErrorMessage.NO_PERMITION);
+        }
+
+        RestData rtv;
+        String fileName = GlobalConst.UPLOAD_PATH + TokenUtil.getToken() + ".xlsx";
+
+        File localFile = new File(fileName);
+        try {
+            file.transferTo(localFile);
+            rtv = scoreService.postScoreTable(fileName, currentUser);
+            if (!localFile.delete()) {
+                logger.warn("Delete " + fileName + " failed!");
+            }
+        } catch (IOException e) {
+            logger.error(e.getLocalizedMessage());
+            rtv = new RestData(1, e.getLocalizedMessage());
+        }
+
+        return rtv;
     }
 
     @RequestMapping(value = "/benchmark/{classId}", method = RequestMethod.GET)
@@ -282,32 +314,6 @@ public class StudentApi {
 
         List<Object> data = historyService.getCourses(titleId);
         return new RestData(data);
-    }
-
-    @RequestMapping(value = "/scoretable", method = RequestMethod.POST)
-    public RestData postScoreTable(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        logger.info("POST postScore : ");
-        Manager currentUser = TokenUtil.getManagerByToken(request);
-        if (null == currentUser) {
-            return new RestData(2, ErrorMessage.PLEASE_RELOGIN);
-        }
-
-        RestData rtv;
-        String fileName = GlobalConst.UPLOAD_PATH + TokenUtil.getToken() + ".xlsx";
-
-        File localFile = new File(fileName);
-        try {
-            file.transferTo(localFile);
-            rtv = scoreService.postScoreTable(fileName, currentUser);
-            if (!localFile.delete()) {
-                logger.warn("Delete " + fileName + " failed!");
-            }
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage());
-            rtv = new RestData(1, e.getLocalizedMessage());
-        }
-
-        return rtv;
     }
 
 }

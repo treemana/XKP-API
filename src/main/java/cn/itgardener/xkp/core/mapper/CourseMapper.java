@@ -1,5 +1,5 @@
 /*
- * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.core.mapper;
@@ -28,9 +28,11 @@ public interface CourseMapper {
     @Delete("DELETE FROM xkp_course WHERE system_id=#{systemId}")
     int deleteBySystemId(int systemId);
 
+    /**
+     * 删除所有课程
+     *
+     * @return 删除结果数量
+     */
     @Delete("DELETE FROM xkp_course")
     int deleteAll();
-
-    @SelectProvider(type = CourseProvider.class, method = "selectByNameAndClassId")
-    List<Course> selectByNameAndClassId(Course course);
 }

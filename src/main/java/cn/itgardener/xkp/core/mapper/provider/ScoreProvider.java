@@ -1,5 +1,5 @@
 /*
- * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.core.mapper.provider;
@@ -11,27 +11,6 @@ import org.apache.ibatis.jdbc.SQL;
  * Created by Hunter-Yi on 17-9-12 上午10:30
  */
 public class ScoreProvider {
-
-    public String insertScore(Score score) {
-        return new SQL() {
-            {
-                INSERT_INTO("xkp_score");
-                VALUES("student_Id", (score.getStudentId()).toString());
-                VALUES("course_Id", (score.getCourseId()).toString());
-                if (score.isType() == true) {
-                    VALUES("type", "1");
-                    if (null != score.getExamination()) {
-                        VALUES("examination", (score.getExamination()).toString());
-                    }
-                } else if (score.isType() == false) {
-                    VALUES("type", "0");
-                    if (null != score.getInspection()) {
-                        VALUES("inspection", "'" + score.getInspection() + "'");
-                    }
-                }
-            }
-        }.toString();
-    }
 
     public String selectByCondition(Score score) {
         return new SQL() {

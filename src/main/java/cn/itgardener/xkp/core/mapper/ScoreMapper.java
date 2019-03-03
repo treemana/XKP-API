@@ -1,5 +1,5 @@
 /*
- * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.core.mapper;
@@ -29,8 +29,4 @@ public interface ScoreMapper {
 
     @Delete("DELETE FROM xkp_score")
     int deleteAll();
-
-    @UpdateProvider(type = ScoreProvider.class, method = "insertScore")
-    int insertScore(Score score);
-
 }

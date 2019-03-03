@@ -1,5 +1,5 @@
 /*
- * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.common;
@@ -8,7 +8,7 @@ package cn.itgardener.xkp.common;
  * Created by zhengyi on 17-7-29.
  */
 public class ErrorMessage {
-    public static String MANAGER_NOT_EXIST = "Manager Not Exist";
+    public static String MANAGER_NOT_EXIST = "管理员不存在!";
     public static String LOGIN_FAILED = "登录失败!";
     public static String PLEASE_RELOGIN = "请重新登录!";
     public static String NO_PERMITION = "操作未授权!";
