@@ -29,4 +29,8 @@ public interface ScoreMapper {
 
     @Delete("DELETE FROM xkp_score")
     int deleteAll();
+
+    @UpdateProvider(type = ScoreProvider.class, method = "insertScore")
+    int insertScore(Score score);
+
 }

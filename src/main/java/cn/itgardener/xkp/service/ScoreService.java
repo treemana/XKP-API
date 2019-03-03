@@ -4,6 +4,8 @@
 
 package cn.itgardener.xkp.service;
 
+import cn.itgardener.xkp.common.RestData;
+import cn.itgardener.xkp.core.model.Manager;
 import cn.itgardener.xkp.core.model.vo.ScoreVo;
 
 import java.util.List;
@@ -21,4 +23,7 @@ public interface ScoreService {
     boolean putScore(ScoreVo scoreVo);
 
     void deleteAll();
+
+    RestData postScoreTable(String fileName, Manager currentUser);
+
 }

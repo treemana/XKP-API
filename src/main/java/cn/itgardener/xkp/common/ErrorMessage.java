@@ -18,4 +18,6 @@ public class ErrorMessage {
     public static String POST_MANAGER_FAILED = "POST Manager Failed";
     public static String POST_STUDENT_FAILED = "POST Student Failed";
     public static String POST_COURSE_FAILED = "POST Course Failed";
+    public static String UPLOAD_ERROR = "上传文件失败!";
+    public static String TABLE_ERROR = "表的格式有误!";
 }

@@ -7,6 +7,7 @@ package cn.itgardener.xkp.web;
 import cn.itgardener.xkp.common.ErrorMessage;
 import cn.itgardener.xkp.common.RestData;
 import cn.itgardener.xkp.common.XkpException;
+import cn.itgardener.xkp.common.util.GlobalConst;
 import cn.itgardener.xkp.common.util.JsonUtil;
 import cn.itgardener.xkp.common.util.TokenUtil;
 import cn.itgardener.xkp.core.mapper.CourseMapper;
@@ -20,9 +21,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -290,4 +294,31 @@ public class StudentApi {
         List<Object> data = historyService.getCourses(titleId);
         return new RestData(data);
     }
+
+    @RequestMapping(value = "/scoretable", method = RequestMethod.POST)
+    public RestData postScoreTable(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        logger.info("POST postScore : ");
+        Manager currentUser = TokenUtil.getManagerByToken(request);
+        if (null == currentUser) {
+            return new RestData(2, ErrorMessage.PLEASE_RELOGIN);
+        }
+
+        RestData rtv;
+        String fileName = GlobalConst.UPLOAD_PATH + TokenUtil.getToken() + ".xlsx";
+
+        File localFile = new File(fileName);
+        try {
+            file.transferTo(localFile);
+            rtv = scoreService.postScoreTable(fileName, currentUser);
+            if (!localFile.delete()) {
+                logger.warn("Delete " + fileName + " failed!");
+            }
+        } catch (IOException e) {
+            logger.error(e.getLocalizedMessage());
+            rtv = new RestData(1, e.getLocalizedMessage());
+        }
+
+        return rtv;
+    }
+
 }

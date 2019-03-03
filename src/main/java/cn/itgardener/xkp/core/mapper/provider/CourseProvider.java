@@ -24,4 +24,22 @@ public class CourseProvider {
             }
         }.toString();
     }
+
+    public String selectByNameAndClassId(Course course) {
+        return new SQL() {
+            {
+                SELECT("system_id AS systemId,class_id AS classId,credit,name,type");
+                FROM("xkp_course");
+                WHERE();
+                if (null != course.getClassId()) {
+                    WHERE("class_id=#{classId}");
+                }
+                if (null != course.getName()) {
+                    WHERE("name=#{name}");
+                }
+                ORDER_BY("credit desc");
+            }
+        }.toString();
+    }
+
 }

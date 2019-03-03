@@ -30,4 +30,7 @@ public interface CourseMapper {
 
     @Delete("DELETE FROM xkp_course")
     int deleteAll();
+
+    @SelectProvider(type = CourseProvider.class, method = "selectByNameAndClassId")
+    List<Course> selectByNameAndClassId(Course course);
 }
