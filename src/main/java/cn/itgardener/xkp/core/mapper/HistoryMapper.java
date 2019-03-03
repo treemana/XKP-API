@@ -1,11 +1,18 @@
+
+/*
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
+ */
+
 package cn.itgardener.xkp.core.mapper;
 
 import cn.itgardener.xkp.core.model.History;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 @Repository
@@ -13,6 +20,7 @@ public interface HistoryMapper {
 
     /**
      * 在历史记录表中插入数据
+     *
      * @param history
      * @return
      */
@@ -22,6 +30,7 @@ public interface HistoryMapper {
 
     /**
      * 查询历史表中年级
+     *
      * @return
      */
     @Select("SELECT DISTINCT grade FROM xkp_history WHERE grade IS NOT NULL")
@@ -29,6 +38,7 @@ public interface HistoryMapper {
 
     /**
      * 查询历史大表
+     *
      * @return
      */
     @Select("SELECT benchmark_data AS benchmarkData,courses FROM xkp_history WHERE system_id=#{titleId}")
@@ -36,8 +46,9 @@ public interface HistoryMapper {
 
     /**
      * 查询大表表头
+     *
      * @return
      */
-    @Select("SELECT DISTINCT system_id AS systemId, title_date AS titleDate FROM xkp_history WHERE title_date IS NOT NULL and class_id=#{classId}")
+    @Select("SELECT system_id AS systemId, title_date AS titleDate FROM xkp_history WHERE title_date IS NOT NULL and class_id=#{classId}")
     List<History> selectTitle(int classId);
 }

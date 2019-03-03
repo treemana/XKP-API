@@ -1,5 +1,5 @@
 /*
- * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.web;
@@ -11,7 +11,10 @@ import cn.itgardener.xkp.common.util.GlobalConst;
 import cn.itgardener.xkp.common.util.JsonUtil;
 import cn.itgardener.xkp.common.util.TokenUtil;
 import cn.itgardener.xkp.core.mapper.CourseMapper;
-import cn.itgardener.xkp.core.model.*;
+import cn.itgardener.xkp.core.model.Benchmark;
+import cn.itgardener.xkp.core.model.Course;
+import cn.itgardener.xkp.core.model.Manager;
+import cn.itgardener.xkp.core.model.Student;
 import cn.itgardener.xkp.core.model.vo.ScoreVo;
 import cn.itgardener.xkp.service.BenchmarkService;
 import cn.itgardener.xkp.service.HistoryService;
@@ -50,7 +53,6 @@ public class StudentApi {
         this.courseMapper = courseMapper;
         this.scoreService = scoreService;
         this.benchmarkService = benchmarkService;
-
         this.historyService = historyService;
     }
 
@@ -269,19 +271,6 @@ public class StudentApi {
         List<Object> data = historyService.getTitle(classId);
         return new RestData(data);
     }
-
-    /*
-    @RequestMapping(value = "/history/grade", method = RequestMethod.GET)
-    public RestData getHistoryGrade( HttpServletRequest request) {
-        logger.info("GET getHistoryGrade");
-        Manager currentUser = TokenUtil.getManagerByToken(request);
-        if (null == currentUser) {
-            return new RestData(2, ErrorMessage.PLEASE_RELOGIN);
-        }
-        List<String> data = historyService.getGrade();
-        return new RestData(data);
-    }
-    */
 
     @RequestMapping(value = "/history/course/{titleId}", method = RequestMethod.GET)
     public RestData getHistoryCourse(@PathVariable(value = "titleId") int titleId, HttpServletRequest request) {

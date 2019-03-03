@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -85,10 +85,10 @@ public class BenchmarkServiceImpl implements BenchmarkService {
             // 操评
             benchmark.setBehavior(student.getBehavior());
             // 德育
-            float moral = (float) ((student.getMoral() + 50));
+            float moral = (student.getMoral() + 50);
             benchmark.setMoral(getDecimal(moral));
             // 文体
-            float activity = (float) ((student.getActivity() + 50));
+            float activity = (student.getActivity() + 50);
             benchmark.setActivity(getDecimal(activity));
             // 其他
             float other = 20 + student.getDuty();
@@ -732,11 +732,7 @@ public class BenchmarkServiceImpl implements BenchmarkService {
         names[0] = specialty.getName() + "-" + xkpClass.getGrade() + "级-" + xkpClass.getName();
         // 副标题
         names[1] = academy.getName() + "-" + names[0];
-        try {
-            names[0] = new String(names[0].getBytes(), "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        names[0] = new String(names[0].getBytes(), StandardCharsets.ISO_8859_1);
         return names;
     }
 

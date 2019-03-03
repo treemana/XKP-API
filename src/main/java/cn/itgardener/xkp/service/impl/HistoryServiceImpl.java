@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.service.impl;
 
 import cn.itgardener.xkp.common.util.JsonUtil;
 import cn.itgardener.xkp.core.mapper.*;
-import cn.itgardener.xkp.core.model.*;
 import cn.itgardener.xkp.core.model.Class;
+import cn.itgardener.xkp.core.model.*;
 import cn.itgardener.xkp.service.BenchmarkService;
 import cn.itgardener.xkp.service.HistoryService;
 import cn.itgardener.xkp.service.ScoreService;
@@ -57,9 +57,7 @@ public class HistoryServiceImpl implements HistoryService {
         // 获取所有有效班级
         List<Class> classes = classMapper.selectAll();
         for (Class oneClass : classes) {
-            System.out.println(oneClass.getSpecialtyId());
             History history = new History();
-
             history.setClassId(oneClass.getSystemId());
             history.setClassName(oneClass.getName());
             history.setGrade(oneClass.getGrade());
@@ -67,14 +65,14 @@ public class HistoryServiceImpl implements HistoryService {
 
             // 填充专业信息
             Specialty specialty = specialtyMapper.selectBySystemId(oneClass.getSpecialtyId());
-
             history.setSpecialtyName(specialty.getName());
+
             history.setAcademyId(specialty.getAcademyId());
 
             // 填充学院信息
             Academy academy = academyMapper.selectAcademyById(specialty.getAcademyId());
-
             history.setAcademyName(academy.getName());
+
             history.setTitleDate(getTitleDate());
 
             // 填充大表数据
@@ -85,10 +83,9 @@ public class HistoryServiceImpl implements HistoryService {
             // 填充课程数据
             Course course = new Course();
             course.setClassId(oneClass.getSystemId());
-            String courses =JsonUtil.getJsonString(courseMapper.selectByCondition(course));
+            String courses = JsonUtil.getJsonString(courseMapper.selectByCondition(course));
 
             history.setCourses(courses);
-            //System.out.println(history.toString());
             historyMapper.insert(history);
         }
 
@@ -132,8 +129,8 @@ public class HistoryServiceImpl implements HistoryService {
         List<History> historys = historyMapper.selectTitle(classId);
         List<Object> ret = new ArrayList<>();
         for (History history : historys) {
-            map.put("systemId",history.getSystemId());
-            map.put("name",history.getTitleDate());
+            map.put("systemId", history.getSystemId());
+            map.put("name", history.getTitleDate());
             ret.add(map);
         }
         return ret;
