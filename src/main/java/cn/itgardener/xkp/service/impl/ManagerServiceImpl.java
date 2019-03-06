@@ -1,5 +1,5 @@
 /*
- * Copyright © 2014-2018 www.itgardener.cn. All rights reserved.
+ * Copyright (c) 2014-2019 www.itgardener.cn. All rights reserved.
  */
 
 package cn.itgardener.xkp.service.impl;
@@ -150,12 +150,10 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public boolean deleteGrade(String grade) {
-        boolean rtv = false;
-        if (0 < managerMapper.deleteByGrade(grade)) {
-            classMapper.deleteByGrade(grade);
-            rtv = true;
-        }
-        return rtv;
+        managerMapper.deleteByGrade(grade);
+        classMapper.deleteByGrade(grade);
+
+        return true;
     }
 
     @Override
