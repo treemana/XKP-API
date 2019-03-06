@@ -65,6 +65,10 @@ public class HistoryServiceImpl implements HistoryService {
 
             // 填充专业信息
             Specialty specialty = specialtyMapper.selectBySystemId(oneClass.getSpecialtyId());
+            if (null == specialty) {
+                classMapper.deleteBySystemId(oneClass.getSystemId());
+                continue;
+            }
             history.setSpecialtyName(specialty.getName());
 
             history.setAcademyId(specialty.getAcademyId());
