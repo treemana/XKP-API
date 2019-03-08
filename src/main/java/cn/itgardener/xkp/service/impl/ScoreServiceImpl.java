@@ -206,6 +206,7 @@ public class ScoreServiceImpl implements ScoreService {
             // 获取courseId
             for (int j = cellStartIndex + 1; j < courseNum + 1; j++) {
                 Course course = courseMap.get(j);
+                score.setCourseId(course.getSystemId());
                 // 判断该门课程为考察/考试
                 score.setType(course.isType());
                 xssfCell = row.getCell(j);
