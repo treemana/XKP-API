@@ -85,10 +85,10 @@ public class BenchmarkServiceImpl implements BenchmarkService {
             // 操评
             benchmark.setBehavior(student.getBehavior());
             // 德育
-            float moral = (student.getMoral() + 50);
+            float moral = (float)((student.getMoral() + 50) * 0.2);
             benchmark.setMoral(getDecimal(moral));
             // 文体
-            float activity = (student.getActivity() + 50);
+            float activity = (float)((student.getActivity() + 50) * 0.1);
             benchmark.setActivity(getDecimal(activity));
             // 其他
             float other = 20 + student.getDuty();
@@ -107,7 +107,7 @@ public class BenchmarkServiceImpl implements BenchmarkService {
             float score = pointScore[1] + student.getAcademic();
             benchmark.setScore(getDecimal(score));
             // 综合
-            float total = (float) (benchmark.getMoral() * 0.2 + benchmark.getScore() * 0.65 + benchmark.getActivity() * 0.1 + benchmark.getOther() * 0.05);
+            float total = (float) (benchmark.getMoral() + benchmark.getScore() * 0.65 + benchmark.getActivity() + benchmark.getOther());
             benchmark.setTotal(getDecimal(total));
             rtv.add(benchmark);
             Sort scoreSort = new Sort();
