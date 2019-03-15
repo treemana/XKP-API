@@ -608,7 +608,9 @@ public class BenchmarkServiceImpl implements BenchmarkService {
 
     private float getPointByExamination(float examination) {
         double point;
-        if (95 <= examination) {
+        if(100 == examination) {
+            point = 5;
+        } else if (95 <= examination) {
             point = 4.5;
         } else if (90 <= examination) {
             point = 4;
