@@ -99,7 +99,7 @@ public class BenchmarkServiceImpl implements BenchmarkService {
             } else if ("中".equals(student.getBehavior())) {
                 other += 10;
             }
-            other = (float) (other / 20 - 0.25);
+            other = other / 20;
             benchmark.setOther(getDecimal(other));
             // 职务
             benchmark.setDutyDesc(student.getDutyDesc());
